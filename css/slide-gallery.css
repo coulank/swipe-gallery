@@ -18,20 +18,19 @@
 
 .slide-gallery figure {
     min-height: 140px;
-    height: 20vw;
-    max-height: 280px;
+    height: 50vw;
+    max-height: 32vh;
     display: flex;
     justify-content: center;
     align-items: center;
 
     margin: 0px 16px;
-    max-height: 100%;
 }
 
 .slide-gallery img{
     min-height: 120px;
-    height: 18vw;
-    max-height: 300px;
+    height: 46vw;
+    max-height: 30vh;
     background-color: white;
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
