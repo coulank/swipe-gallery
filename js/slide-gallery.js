@@ -9,7 +9,7 @@ var slide_gallery = new (function(){
         if (parentElement == null)
             parentElement = $(activeElement).parents('ul')[0];
         var ul_index = Number(parentElement.getAttribute('index'));
-        var figures = $(parentElement).find('li>figure');
+        var figures = $(parentElement).find('li>div>figure');
         figures.removeClass('active');
         $(activeElement).addClass('active');
         var index = Number(activeElement.getAttribute('index'));
@@ -35,7 +35,7 @@ var slide_gallery = new (function(){
     function MoveToActive(ul_index, activeElement = null, time = 400){
         s = m_slides[ul_index];
         parent = s['ul']
-        var figures = $(parent).find('li>figure');
+        var figures = $(parent).find('li>div>figure');
         if (activeElement == null)
             activeElement = figures[s['active']];
         SetActive(activeElement, parent);
@@ -101,7 +101,7 @@ var slide_gallery = new (function(){
                 MoveToActive(index);
                 return;
             }
-            var figures = (ul).find('li>figure');
+            var figures = (ul).find('li>div>figure');
             var toIndex = null;
             if (s['x_cr'] < s['min'])
                 toIndex = s['active'] + 1;
@@ -182,9 +182,15 @@ var slide_gallery = new (function(){
     
         var m_li = $(s).children('li');
         var m_figures = m_li.children('figure');
-    
-        for (j = 0; j < m_figures.length; j++){
+        if (m_figures.length === 0) m_figures = m_li.find('div>figure');
+        for (j = 0; j < m_li.length; j++){
+            var li = m_li[j];
             var s = m_figures[j];
+            if ($(li).children('div').length === 0){
+                var cfig = document.createElement('div');
+                cfig.appendChild(s);
+                li.appendChild(cfig);
+            }
             s.setAttribute('index', j);
             s.addEventListener('click', function(){
                 var index = Number(this.getAttribute('index'));
@@ -216,7 +222,7 @@ var slide_gallery = new (function(){
         }
         var ul = $(parent).find('ul')[0];
         var ul_index = ul.getAttribute('index');
-        var figures = $(ul).find('li>figure');
+        var figures = $(ul).find('li>div>figure');
         var li_length = figures.length;
         var index = Number(m_slides[ul_index]['active']);
         m_ActiveElement = figures[index];

@@ -16,15 +16,10 @@
     margin: auto;
 }
 
-.slide-gallery figure {
-    min-height: 140px;
-    height: 50vw;
-    max-height: 32vh;
+.slide-gallery>div {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    margin: 0px 16px;
 }
 
 .slide-gallery img{
@@ -103,4 +98,10 @@
     -o-transition: all .3s;
     transition: all .3s;
     opacity: 0;
+}
+
+.slide-gallery-frame figcaption{
+    margin-top: 4px;
+    color: #aaaaaa;
+    text-align: center;
 }
