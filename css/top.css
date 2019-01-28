@@ -1,0 +1,45 @@
+body {
+}
+#profile{
+    background-image:url(../images/profile.png?v=0.1);
+    background-size:cover;
+    background-position-y:center;
+    border-radius:20px;
+    width:90%;
+    height:200px;
+}
+.lp{
+    background-size:cover;
+    border-radius:20px;
+    width:100%;
+}
+.rolink{
+    margin:4px 4px;
+    width:90%;
+    display:inline-block;
+    cursor:pointer;
+}
+.txtbox{
+    width: 90%;
+    height:400px;
+	overflow: scroll;
+	margin:0 auto;
+    background-color:white;
+    border-radius:20px;
+    padding:16px 10px;
+    margin-bottom:16px;
+}
+#log{
+	padding-top:16px;
+}
+@media screen and (min-width:480px) {
+.rolink{
+    width:40%;
+}
+}
+@media screen and (min-width:720px) {
+.rolink{
+    width:28%;
+
+}
+}
