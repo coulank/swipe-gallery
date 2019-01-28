@@ -191,7 +191,15 @@ var slide_gallery = new (function(){
                 var parents = $(this).parents('.slide-gallery');
                 var s_index = Number(parents[0].getAttribute('index'));
                 if (m_slides[s_index]['active'] === index){
-                    window.open($(this).find('img')[0].getAttribute('src'));
+                    var img = $(this).find('img')[0];
+                    var url = img.getAttribute('src');
+                    // data-linkに値が入ってるときは元の画像を表示させるように仕向けます
+                    var datalink = img.getAttribute('data-link');
+                    datalink = (datalink === null) ? '' : datalink;
+                    if (datalink !== '') {
+                        url = url.replace(/^(.*)(\-\d*x\d*)(\.\w*)$/, "$1$3");
+                    }
+                    window.open(url);
                 } else {
                     m_slides[s_index]['active'] = index;
                     m_ActiveElement = MoveToActive(s_index);
