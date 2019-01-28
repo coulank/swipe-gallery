@@ -1,34 +1,37 @@
-.slide-gallery-navi{
+.slide-gallery-frame{
     background-color: rgb(20, 20, 20);
     overflow: hidden;
     margin: 0;
     width: 100%;
-    max-width: 100%;
+    position: relative;
 }
 
 .slide-gallery{
     white-space: nowrap;
-    max-height: 40vw;
-    min-height: 208px;
     margin: auto;
 }
 .slide-gallery li{
     display: inline-block;
     vertical-align: bottom;    
-    max-height: 100%;
+    margin: auto;
 }
 
 .slide-gallery figure {
-    display: block;
-    margin: 4px 16px;
+    min-height: 140px;
+    height: 20vw;
+    max-height: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0px 16px;
     max-height: 100%;
-    outline: none;
 }
 
 .slide-gallery img{
-    display: block;
-    max-height: 34vw;
-    min-height: 200px;
+    min-height: 120px;
+    height: 18vw;
+    max-height: 300px;
     background-color: white;
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
@@ -36,6 +39,7 @@
     -o-transition: all .3s;
     transition: all .3s;
     opacity: .4;
+    cursor: pointer;
 }
 .slide-gallery .active img {
     -webkit-transition: all .3s;
@@ -46,4 +50,58 @@
     opacity: 1;
     outline: none;
 }
+.slide-inner-button{
+    position: absolute;
+    z-index: 1;
+    width: 10%;
+    height: 100%;
+    cursor: pointer;
+}	
+.slide-inner-button>div{
+    height: 100%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.slide-inner-button>div span{
+    color: white;
+    transform: scale(1, 4);
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+    opacity: .6;
+}
+.slide-inner-button.left{
+    background: linear-gradient(90deg,#202020FF, #20202000);
+}	
+.slide-inner-button.left:hover{
+    background: linear-gradient(90deg,#404040FF, #80808000);
+}
 
+.slide-inner-button.right{
+    right: 0px;
+    background: linear-gradient(270deg,#202020FF, #20202000);
+}	
+.slide-inner-button.right:hover{
+    background: linear-gradient(270deg,#404040FF, #80808000);
+}
+
+.slide-gallery-frame[active='first'] .slide-inner-button.left span{
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+    opacity: 0;
+}
+
+.slide-gallery-frame[active='last'] .slide-inner-button.right span{
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+    opacity: 0;
+}
