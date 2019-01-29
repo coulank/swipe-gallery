@@ -3,6 +3,9 @@ var slide_gallery = new (function(){
     var flameTime = 1000 / fps;
     var m_ActiveElement = null;
     var mousewheelevent = 'onwheel' in document ? 'wheel' : 'onmousewheel' in document ? 'mousewheel' : 'DOMMouseScroll';
+    var m_slides = [];
+    var m_slide = $('.slide-gallery');
+    m_slide.removeClass('wp-block-gallery');
 
     // activeクラスを付与するための関数
     function SetActive(activeElement, parentElement = null) {
@@ -57,9 +60,21 @@ var slide_gallery = new (function(){
             MoveToActive(i);
         }
     }
-    var m_slides = [];
-    var m_slide = $('.slide-gallery');
-    m_slide.removeClass('wp-block-gallery');
+    function GotoImageLink(ul_index){
+        s = m_slides[ul_index];
+        ul = s['ul'];
+        var lis = $(ul).find('li');
+        var li = lis[m_slides[ul_index]['active']];
+        var img = $(li).find('img')[0];
+        var url = img.getAttribute('src');
+        // data-linkに値が入ってるときは元の画像を表示させるように仕向けます
+        var datalink = img.getAttribute('data-link');
+        datalink = (datalink === null) ? '' : datalink;
+        if (datalink !== '') {
+            url = url.replace(/^(.*)(\-\d*x\d*)(\.\w*)$/, "$1$3");
+        }
+        window.open(url);
+    }
     // ここのループはスワイプギャラリーに紐づけされた分の付与
     for (i = 0; i < m_slide.length; i++){
         var s = m_slide[i];
@@ -75,22 +90,23 @@ var slide_gallery = new (function(){
         }
         $(m_div).attr({tabindex: 0});
 
+        if ($(m_div).children('.slide-inner-button').length === 0){
+            m_div.insertAdjacentHTML('afterbegin', (function(){
+                var childrenElem = [];
+                childrenElem[0] = document.createElement('div');
+                childrenElem[0].setAttribute('class', 'slide-inner-button left');
+                childrenElem[1] = childrenElem[0].appendChild(document.createElement('div'))
+                    .appendChild(document.createElement('span'));
+                childrenElem[1].innerText = '<'
+                childrenElem[2] = document.createElement('div');
+                childrenElem[2].setAttribute('class', 'slide-inner-button right');
+                childrenElem[3] = childrenElem[2].appendChild(document.createElement('div'))
+                    .appendChild(document.createElement('span'));
+                childrenElem[3].innerText = '>'
+                return (childrenElem[0].outerHTML + "\n" + childrenElem[2].outerHTML);
+            })());
+        }
 
-        m_div.insertAdjacentHTML('afterbegin', (function(){
-            var childrenElem = [];
-            childrenElem[0] = document.createElement('div');
-            childrenElem[0].setAttribute('class', 'slide-inner-button left');
-            childrenElem[1] = childrenElem[0].appendChild(document.createElement('div'))
-                .appendChild(document.createElement('span'));
-            childrenElem[1].innerText = '<'
-            childrenElem[2] = document.createElement('div');
-            childrenElem[2].setAttribute('class', 'slide-inner-button right');
-            childrenElem[3] = childrenElem[2].appendChild(document.createElement('div'))
-                .appendChild(document.createElement('span'));
-            childrenElem[3].innerText = '>'
-            return (childrenElem[0].outerHTML + "\n" + childrenElem[2].outerHTML);
-        })());
-        
         $(m_div).addClass('wp-block-image');
         m_slides.push({ul: $(m_div).children('ul')[0], active: 0, x: 0,
             lastEvent: null, isAnim: false, x_cr: null});
@@ -146,6 +162,9 @@ var slide_gallery = new (function(){
         $(m_div).keydown(function(e){
             var keyEvent = e.originalEvent;
             switch (keyEvent.keyCode){
+                case 13: // 改行
+                    GotoImageLink(Number($(this).children('ul')[0].getAttribute('index')));
+                    break;
                 case 37: // ←
                 case 65: // a
                     GoButtonEvent(this, -1);
@@ -197,15 +216,7 @@ var slide_gallery = new (function(){
                 var parents = $(this).parents('.slide-gallery');
                 var s_index = Number(parents[0].getAttribute('index'));
                 if (m_slides[s_index]['active'] === index){
-                    var img = $(this).find('img')[0];
-                    var url = img.getAttribute('src');
-                    // data-linkに値が入ってるときは元の画像を表示させるように仕向けます
-                    var datalink = img.getAttribute('data-link');
-                    datalink = (datalink === null) ? '' : datalink;
-                    if (datalink !== '') {
-                        url = url.replace(/^(.*)(\-\d*x\d*)(\.\w*)$/, "$1$3");
-                    }
-                    window.open(url);
+                    GotoImageLink(s_index);
                 } else {
                     m_slides[s_index]['active'] = index;
                     m_ActiveElement = MoveToActive(s_index);
@@ -251,7 +262,6 @@ var slide_gallery = new (function(){
     });
     $(window).on('load', 
         function(){
-            MoveUpdate();
             MoveUpdate();
         }
     );

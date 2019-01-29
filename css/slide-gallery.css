@@ -17,16 +17,17 @@
 }
 
 .slide-gallery li>div {
-    margin: 1em 40px;
+    margin: 8px 24px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .slide-gallery img{
-    min-height: 120px;
+    min-height: 200px;
     height: 46vw;
     max-height: 30vh;
+    width: auto !important;
     background-color: white;
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
