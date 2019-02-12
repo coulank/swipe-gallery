@@ -17,7 +17,11 @@ var slide_gallery = new (function(){
         $(activeElement).addClass('active');
         var index = Number(activeElement.getAttribute('index'));
         if (index === 0) {
-            $(parentElement.parentElement).attr({active: 'first'});
+            if (index > (figures.length - 2))
+                // 一つしか存在しなかった場合
+                $(parentElement.parentElement).attr({active: 'only'});
+            else
+                $(parentElement.parentElement).attr({active: 'first'});
         } else if(index > (figures.length - 2)) {
             $(parentElement.parentElement).attr({active: 'last'});
         } else {

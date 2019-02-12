@@ -84,7 +84,8 @@
     background: linear-gradient(270deg,#404040FF, #80808000);
 }
 
-.slide-gallery-frame[active='first'] .slide-inner-button.left span{
+.slide-gallery-frame[active='first'] .slide-inner-button.left span,
+.slide-gallery-frame[active='only'] .slide-inner-button.left span{
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
     -ms-transition: all .3s;
@@ -93,7 +94,8 @@
     opacity: 0;
 }
 
-.slide-gallery-frame[active='last'] .slide-inner-button.right span{
+.slide-gallery-frame[active='last'] .slide-inner-button.right span,
+.slide-gallery-frame[active='only'] .slide-inner-button.right span{
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
     -ms-transition: all .3s;
