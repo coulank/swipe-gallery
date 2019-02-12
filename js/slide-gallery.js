@@ -71,7 +71,13 @@ var slide_gallery = new (function(){
         var datalink = img.getAttribute('data-link');
         datalink = (datalink === null) ? '' : datalink;
         if (datalink !== '') {
-            url = url.replace(/^(.*)(\-\d*x\d*)(\.\w*)$/, "$1$3");
+            if (datalink.match(/\/$/)) {
+                // 末尾が/の場合はurlから取る、そして改変する
+                url = url.replace(/^(.*)(\-\d*x\d*)(\.\w*)$/, "$1$3");
+            } else {
+                // そうでもない場合はdatalinkはURLそのものになります
+                url = datalink;
+            }
         }
         window.open(url);
     }
